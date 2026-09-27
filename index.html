@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>ARTERIA — AI Traffic Signal Control</title>
+<meta name="description" content="Traffic signals that count vehicles with cameras, decide their own green times, and tell the next signal what is coming." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./src/styles.css" />
+</head>
+<body>
+
+<div id="boot">
+  <div class="boot-inner">
+    <div class="boot-mark">ARTERIA</div>
+    <div class="boot-sub">AI TRAFFIC SIGNAL CONTROL</div>
+    <div class="boot-bar"><i></i></div>
+    <div class="boot-step" id="bootStep">starting</div>
+  </div>
+</div>
+
+<div id="app" hidden>
+
+  <!-- ─────────────────────────── top bar ─────────────────────────── -->
+  <header id="topbar">
+    <div class="brand">
+      <span class="logo"></span>
+      <span class="name">ARTERIA</span>
+      <span class="tag">AI traffic signal control</span>
+    </div>
+
+    <div class="agent offline" id="agentPill" title="Laya decision engine">
+      <span class="agent-av">L</span>
+      <span class="agent-name">LAYA</span>
+      <span class="agent-state"><i></i><span id="agentState">CHECKING</span></span>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="ctrl">
+      <span class="ctrl-label">HOW BUSY</span>
+      <div class="seg" id="segProfile">
+        <button data-p="offpeak">QUIET</button>
+        <button data-p="normal" class="on">NORMAL</button>
+        <button data-p="peak">RUSH HOUR</button>
+        <button data-p="surge">EVENT RUSH</button>
+      </div>
+    </div>
+
+
+    <div class="clock">
+      <div class="clock-time" id="clockTime">00:00</div>
+      <div class="clock-label">RUNNING</div>
+    </div>
+  </header>
+
+  <!-- ─────────────────────────── left column ─────────────────────── -->
+  <aside id="left">
+
+    <section class="card hero">
+      <div class="hero-label">Drivers wait</div>
+      <div class="hero-num"><span id="heroPct">—</span><small>% less</small></div>
+      <div class="hero-explain">
+        at these six junctions, compared with the ordinary fixed-timer signals
+        most cities run today
+      </div>
+      <div class="hero-vs">
+        <div class="vs-row">
+          <span class="dot ai"></span><span class="vs-k">With AI control</span>
+          <b id="heroAi">—</b><small>sec</small>
+        </div>
+        <div class="vs-row">
+          <span class="dot fx"></span><span class="vs-k">Fixed timers</span>
+          <b id="heroFx">—</b><small>sec</small>
+        </div>
+      </div>
+      <p class="fineprint">Both run at the same time, with exactly the same
+        vehicles arriving, so the two numbers are directly comparable.</p>
+    </section>
+
+    <section class="card">
+      <div class="card-h"><span>WASTED GREEN LIGHT</span></div>
+      <p class="lede">Green shown to an empty road. It is the single biggest
+        thing a fixed timer gets wrong, and the main thing this system fixes.</p>
+      <div class="waste">
+        <div class="waste-row">
+          <label>AI control</label>
+          <div class="wbar"><i id="wasteAi"></i></div>
+          <output id="wasteAiTxt">—</output>
+        </div>
+        <div class="waste-row dim">
+          <label>Fixed timers</label>
+          <div class="wbar"><i id="wasteFx"></i></div>
+          <output id="wasteFxTxt">—</output>
+        </div>
+      </div>
+      <div class="reclaim">
+        <span id="reclaimS">0</span><small>seconds</small>
+        <em>of pointless green cut short and handed to a road that actually
+          had vehicles waiting</em>
+      </div>
+    </section>
+
+    <section class="card grow">
+      <div class="card-h"><span>SIDE BY SIDE</span><em>same traffic, both systems</em></div>
+      <div id="cmpRows"></div>
+    </section>
+
+  </aside>
+
+  <!-- ─────────────────────────── stage ───────────────────────────── -->
+  <main id="stage">
+    <canvas id="scene"></canvas>
+    <canvas id="overlay"></canvas>
+
+    <div class="hint" id="hint">Click any junction to open it</div>
+
+    <!-- signal-to-signal messages, corner panel -->
+    <div class="chatbox" id="chatbox">
+      <div class="chat-h">
+        <span class="chat-dot"></span>
+        <span>CONTROL ROOM</span>
+        <button id="chatToggle" title="Hide">–</button>
+      </div>
+      <div class="chat-body" id="chatBody"></div>
+      <div class="chat-f">Laya answers a typed question per junction &mdash; which
+        road next, hold or switch &mdash; with a calibrated probability. Junctions
+        also warn each other what is coming.</div>
+    </div>
+
+    <!-- junction detail: floats over the 3D view so the four camera feeds can
+         be rendered straight into the canvas underneath their slots -->
+    <div class="detailbox" id="detailbox">
+      <div class="detail-h">
+        <span class="detail-id" id="dId">J22</span>
+        <span class="detail-now" id="dNow">—</span>
+        <span class="detail-why" id="dWhy">—</span>
+      </div>
+      <div class="roads" id="roads"></div>
+      <div class="detail-f">
+        <span><i class="lg-box"></i>boxes are what this junction's cameras detect right now</span>
+      </div>
+    </div>
+
+    <div class="stage-tr" id="alertStack"></div>
+
+    <div class="stage-bl">
+      <button class="ghost" id="btnView">VIEW: WHOLE CITY</button>
+      <button class="ghost on" id="btnCoord">SIGNALS TALK TO EACH OTHER: ON</button>
+      <button class="ghost rec" id="btnReel">RECORD DEMO</button>
+    </div>
+  </main>
+
+  <!-- ─────────────────────────── right column ────────────────────── -->
+  <aside id="right">
+    <div class="col-h">
+      <span>THE SIX JUNCTIONS</span>
+      <em>click one</em>
+    </div>
+    <div id="junctions"></div>
+  </aside>
+
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
