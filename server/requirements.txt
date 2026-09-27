@@ -1,0 +1,6 @@
+# ARTERIA - Laya decision sidecar
+# Installs torch and transformers, so expect a large first download.
+laya>=0.3.20
+fastapi>=0.110.0
+uvicorn>=0.27.0
+pydantic>=2.0
