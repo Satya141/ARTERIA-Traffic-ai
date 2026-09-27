@@ -10,6 +10,13 @@ the ground — Kothaguda, Cyber Towers, Mindspace, Botanical Garden, Shilpa Layo
 and Durgam Cheruvu — and the blocks around them carry Cyber Towers, the IT-park
 slabs, a mall, and Durgam Cheruvu with its cable-stayed bridge.
 
+[![licence: MIT](https://img.shields.io/badge/licence-MIT-informational)](LICENSE)
+[![demo video](https://img.shields.io/badge/demo-1%3A44%20video-crimson)](https://github.com/Satya141/ARTERIA-Traffic-ai/releases/latest)
+
+**▶ [Watch the 1:44 demo](https://github.com/Satya141/ARTERIA-Traffic-ai/releases/latest)** —
+problem, the three things that fix it, the decision model, the stack, and the
+result. Every figure on screen is read live out of the running simulation.
+
 ---
 
 ## The problem
