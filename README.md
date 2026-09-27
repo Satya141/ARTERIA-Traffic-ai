@@ -417,3 +417,28 @@ renderer's scissor rectangle — not a video, and not a diagram.
 
 Built as a study of how much delay is sitting inside ordinary fixed-time signal
 plans, and how much of it a camera and a decent decision rule can take back.
+
+---
+
+## Licence
+
+This project is released under the [MIT Licence](LICENSE).
+
+It builds on work released by others:
+
+| | licence | how it is used |
+|---|---|---|
+| [Laya](https://github.com/NandhaKishorM/laya) — Convai Innovations | Apache-2.0 | the decision engine, installed from PyPI |
+| [Three.js](https://github.com/mrdoob/three.js) | MIT | rendering |
+| [Vite](https://github.com/vitejs/vite) | MIT | build |
+| PyTorch, Transformers | BSD-3 / Apache-2.0 | the fine-tune |
+
+None of these are vendored into this repository — they install from npm and
+PyPI — so the MIT licence above covers this project's own source only.
+
+One thing to note if you build on the fine-tuning side of this: the checkpoint
+produced by `server/finetune_traffic.py` is a **derivative of Laya's
+Apache-2.0 base checkpoint**. It is not distributed here (`models/` is
+git-ignored, and the pipeline rebuilds it in about 32 minutes). If you publish
+your own trained weights, Apache-2.0 asks you to carry its licence text with
+them and to state what you changed.
