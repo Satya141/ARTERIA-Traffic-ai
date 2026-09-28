@@ -22,6 +22,8 @@ data/*.jsonl
 capture/
 *.mp4
 *.webm
+# brag / Hyperframes edit of the 1-minute cut: plates, voice-over, renders
+brag-output/
 
 # ---- logs & local noise --------------------------------------------------
 *.log

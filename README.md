@@ -12,10 +12,15 @@ slabs, a mall, and Durgam Cheruvu with its cable-stayed bridge.
 
 [![licence: MIT](https://img.shields.io/badge/licence-MIT-informational)](LICENSE)
 [![demo video](https://img.shields.io/badge/demo-1%3A44%20video-crimson)](https://github.com/Satya141/ARTERIA-Traffic-ai/releases/latest)
+[![1-minute cut](https://img.shields.io/badge/demo-1%3A00%20cut-crimson)](https://github.com/Satya141/ARTERIA-Traffic-ai/releases/download/v1.0.0/ARTERIA-demo-1min.mp4)
 
 **▶ [Watch the 1:44 demo](https://github.com/Satya141/ARTERIA-Traffic-ai/releases/latest)** —
 problem, the three things that fix it, the decision model, the stack, and the
 result. Every figure on screen is read live out of the running simulation.
+
+**▶ [Watch the 1-minute cut](https://github.com/Satya141/ARTERIA-Traffic-ai/releases/download/v1.0.0/ARTERIA-demo-1min.mp4)** —
+the same story, narrated, for a feed: clean shots of the city and the approach
+cameras, with the results from the tables below.
 
 ---
 
